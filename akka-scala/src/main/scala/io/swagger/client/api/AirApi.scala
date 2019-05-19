@@ -51,6 +51,8 @@ object AirApi {
    * 
    * 
    * Expected answers:
+   *   code 400 :  (Invalid ID supplied)
+   *   code 404 :  (Air reading not found)
    *   code 405 :  (Invalid input)
    * 
    * @param body A new pressure reading
@@ -58,6 +60,8 @@ object AirApi {
   def addPressure(body: Pressure): ApiRequest[Unit] =
     ApiRequest[Unit](ApiMethods.POST, "https://virtserver.swaggerhub.com/mowi22/Agtech-standard-model/1.0.0", "/pressure", "application/json")
       .withBody(body)
+      .withErrorResponse[Unit](400)
+      .withErrorResponse[Unit](404)
       .withErrorResponse[Unit](405)
         /**
    * 
